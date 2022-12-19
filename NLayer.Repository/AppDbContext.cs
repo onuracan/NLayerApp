@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NLayer.Core;
+using NLayer.Core.Model;
+using NLayer.Repository.Configurations;
+using System.Reflection;
 
 namespace NLayer.Repository;
 
@@ -16,6 +18,17 @@ public class AppDbContext:DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        //modelBuilder.ApplyConfiguration<Product>(new ProductConfiguration());
+        //new ProductConfiguration().Configure(modelBuilder.Entity<Product>());
+
+        //modelBuilder.Entity<ProductFeature>().HasData(new ProductFeature()
+        //{
+
+        //});
+
+
         base.OnModelCreating(modelBuilder);
     }
 }
