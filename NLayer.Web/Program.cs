@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NLayer.Repository;
 using NLayer.Service.Mapping;
 using NLayer.Service.Validation;
+using NLayer.Web.ApiServices;
 using NLayer.Web.Filters;
 using NLayer.Web.Modules;
 using System.Reflection;
@@ -16,6 +17,10 @@ builder.Services.AddControllersWithViews().AddFluentValidation(x => x.RegisterVa
 
 builder.Services.AddScoped(typeof(NotFoundFilter<>));
 builder.Services.AddAutoMapper(typeof(MapProfile));
+builder.Services.AddHttpClient<ProductApiService>(opt =>
+{
+    opt.BaseAddress = new(builder.Configuration["BaseUrl"]);
+});
 
 builder.Services.AddDbContext<AppDbContext>(x =>
 {

@@ -7,6 +7,7 @@ using NLayer.Repository.Repositories;
 using NLayer.Repository.UnitOfWork;
 using NLayer.Service;
 using NLayer.Service.Mapping;
+using NLayer.Web.ApiServices;
 using System.Reflection;
 using Module = Autofac.Module;
 
@@ -20,6 +21,7 @@ public class RepoServiceModule : Module
         builder.RegisterGeneric(typeof(Service<>)).As(typeof(IService<>)).InstancePerLifetimeScope();
         builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
         builder.RegisterType<ProductServiceWithNoCaching>().As<IProductService>();
+        builder.RegisterType<ProductApiService>();
 
         var apiAssembly = Assembly.GetExecutingAssembly();
         var repoAssembly = Assembly.GetAssembly(typeof(AppDbContext));

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using NLayer.Core.DTOs;
 using NLayer.Core.Model;
 using NLayer.Core.Services;
+using NLayer.Web.ApiServices;
 
 namespace NLayer.Web.Controllers;
 
@@ -13,17 +14,28 @@ public class ProductsController : Controller
     private readonly IService<Category> _serviceCategory;
     private readonly IMapper _mapper;
 
-    public ProductsController(IProductService serviceProduct, IService<Category> serviceCategory, IMapper mapper)
+    private readonly ProductApiService _productApiService;
+
+    public ProductsController(ProductApiService productApiService)
     {
-        this._serviceProduct = serviceProduct;
-        this._serviceCategory = serviceCategory;
-        this._mapper = mapper;
+        _productApiService = productApiService;
     }
+
+    //public ProductsController(IProductService serviceProduct, IService<Category> serviceCategory, IMapper mapper)
+    //{
+    //    this._serviceProduct = serviceProduct;
+    //    this._serviceCategory = serviceCategory;
+    //    this._mapper = mapper;
+    //}
+
+
 
 
     public async Task<IActionResult> Index()
     {
-        return View(await this._serviceProduct.GetProductsWithCategoryForMvc());
+        //return View(await this._serviceProduct.GetProductsWithCategoryForMvc());
+
+        return View(await _productApiService.GetProductWithCategoryAsync());
     }
 
     public async Task<IActionResult> Save()
